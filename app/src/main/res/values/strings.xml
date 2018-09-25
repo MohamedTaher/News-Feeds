@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">News Feed</string>
+
+    <string name="connection_error">Internet Connection Error</string>
+    <string name="by">By</string>
+
+    <string name="link_development">Link Development</string>
+
+    <string name="open_website">OPEN WEBSITE</string>
+    <string name="no_application_to_open_web_link">"No application can handle this request. Please install a web browser or check your URL."</string>
+    <string name="no_website_to_this_article">no website to this article</string>
+
 </resources>

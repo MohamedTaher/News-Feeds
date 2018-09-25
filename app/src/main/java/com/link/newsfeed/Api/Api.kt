@@ -14,7 +14,6 @@ object Api {
 
         if (newsFeedApi == null) {
             val gson = GsonBuilder()
-                    .setDateFormat(Config.DATE_FORMAT)
                     .create()
 
             val client = OkHttpClient.Builder().addInterceptor(MyRetrofitInterceptor())
