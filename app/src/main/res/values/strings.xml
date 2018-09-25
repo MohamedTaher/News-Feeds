@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">News Feed</string>
 
+    <string name="action_search">Search</string>
+
     <string name="connection_error">Internet Connection Error</string>
     <string name="by">By</string>
 
