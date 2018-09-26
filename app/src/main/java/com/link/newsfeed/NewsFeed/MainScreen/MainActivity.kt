@@ -17,7 +17,7 @@ import com.link.newsfeed.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class MainActivity : AppCompatActivity(), DrawerMenuItem.DrawerCallBack {
+class MainActivity : AppCompatActivity(), DrawerHeader.DrawerCallBack, DrawerMenuItem.DrawerCallBack {
 
     private var selectedItemPosition: Int? = null
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), DrawerMenuItem.DrawerCallBack {
 
         val user = User("Tony Roshdy", R.drawable.profile)
 
-        drawer_place_holder_view?.addView(DrawerHeader(user))
+        drawer_place_holder_view?.addView(DrawerHeader(user).setDrawerCallBack(this))
                 ?.addView(DrawerMenuItem(this, Constant.MenuItem.EXPLORE_MENU_ITEM).setDrawerCallBack(this))
                 ?.addView(DrawerMenuItem(this, Constant.MenuItem.LIVE_CHAT_MENU_ITEM).setDrawerCallBack(this))
                 ?.addView(DrawerMenuItem(this, Constant.MenuItem.GALLERY_MENU_ITEM).setDrawerCallBack(this))
@@ -90,6 +90,10 @@ class MainActivity : AppCompatActivity(), DrawerMenuItem.DrawerCallBack {
             }
 
         }
+    }
+
+    override fun onDrawerHeaderClick() {
+        Utils.makeToast(this, "PROFILE")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
