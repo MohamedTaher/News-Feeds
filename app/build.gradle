@@ -28,6 +28,10 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //placeholder
+    implementation 'com.mindorks.android:placeholderview:1.0.3'
+    kapt 'com.mindorks.android:placeholderview-compiler:1.0.3'
+
     //paper parcel
     implementation 'nz.bradcampbell:paperparcel:2.0.6'
     implementation 'nz.bradcampbell:paperparcel-kotlin:2.0.6' // Optional

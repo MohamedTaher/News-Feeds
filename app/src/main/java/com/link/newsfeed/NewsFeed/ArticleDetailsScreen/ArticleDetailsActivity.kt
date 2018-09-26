@@ -4,16 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.FragmentTransaction
+import android.view.Menu
 import android.view.MenuItem
+import com.link.newsfeed.Data.Constant
 import com.link.newsfeed.Data.Model.Article
 import com.link.newsfeed.Helper.Utils
 import com.link.newsfeed.R
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_article_details.*
+import kotlinx.android.synthetic.main.toolbar.*
 
-class ArticleDetailsActivity : AppCompatActivity(), ArticleDetailsViewContract {
-
-    private val dateFormate = "MMM dd, yyyy"
+class ArticleDetailsActivity : AppCompatActivity() {
 
     private var article: Article? = null
 
@@ -26,51 +26,43 @@ class ArticleDetailsActivity : AppCompatActivity(), ArticleDetailsViewContract {
             finish()
         }
 
+        setSupportActionBar(main_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        title = getString(R.string.link_development)
-
-        initView()
-        handleOptions()
+        initViews()
     }
 
-    private fun initView() {
-        Picasso.get()
-                .load(article?.urlToImage)
-                .placeholder(R.drawable.placeholder)
-                .into(article_image_view)
-
-        article_title_text_view?.text = article?.title
-
-        val authorBy = "${getString(R.string.by)} ${article?.author}"
-        article_author_text_view?.text = authorBy
-
-        val formattedDateStr = Utils.toFormattedString(article?.publishedAt, dateFormate)
-        article_date_text_view?.text = formattedDateStr
-
-        article_description_text_view?.text = article?.description
+    private fun initViews() {
+        setFragment()
     }
 
-    private fun handleOptions() {
-        open_website_button?.setOnClickListener {
-            openArticleWebsite(article?.url)
+    private fun setFragment() {
+        if (article == null) {
+            return
         }
+
+        val articleDetailsFragment = ArticleDetailsFragment()
+        articleDetailsFragment.setArticle(article!!)
+
+        val transaction = supportFragmentManager?.beginTransaction()
+        transaction?.replace(R.id.article_details_frame_layout, articleDetailsFragment, Constant.FragmentsTags.ARTICLE_DETAILS_TAG)
+        transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        transaction?.commit()
     }
 
-    override fun openArticleWebsite(url: String?) {
-        if (url == null) {
-            Utils.makeToast(this, R.string.no_website_to_this_article)
-
-        } else {
-            Utils.openWebPage(this, article?.url!!)
-        }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_meun, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // handle arrow click here
+        val id = item.getItemId()
+
         if (item.itemId == android.R.id.home) {
             onBackPressed()
+        } else if (id == R.id.action_search) {
+            Utils.makeToast(this, "SEARCH")
         }
 
         return super.onOptionsItemSelected(item)
